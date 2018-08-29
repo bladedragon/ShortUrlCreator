@@ -36,7 +36,7 @@ public class IpFilter implements Filter {
             HttpServletRequest request = (HttpServletRequest) servletRequest;
             HttpServletResponse response = (HttpServletResponse) servletResponse;
             ServletContext context = config.getServletContext();
-            // 获取限制IP存储器：存储被限制的IP信息
+
             Map<String, Long> limitedIpMap = (Map<String, Long>) context.getAttribute("limitedIpMap");
             // 过滤受限的IP
             filterLimitedIpMap(limitedIpMap);
@@ -46,20 +46,18 @@ public class IpFilter implements Filter {
             // 判断是否是被限制的IP，如果是则跳到异常页面
             if (isLimitedIP(limitedIpMap, ip)) {
                 long limitedTime = limitedIpMap.get(ip) - System.currentTimeMillis();
-                // 剩余限制时间(用为从毫秒到秒转化的一定会存在些许误差，但基本可以忽略不计)
+
                 request.setAttribute("remainingTime", ((limitedTime / 1000) + (limitedTime % 1000 > 0 ? 1 : 0)));
                 //request.getRequestDispatcher("/error/overLimitIP").forward(request, response);
                 System.err.println("ip访问过于频繁："+ip);
-                //response.setCharacterEncoding("gb2312");    //设置输出内容编码格式
+                //response.setCharacterEncoding("gb2312");
 //            response.reset();
-//            response.setCharacterEncoding("utf-8");    //设置输出内容编码格式
+//            response.setCharacterEncoding("utf-8");
                 return;
             }
             // 获取IP存储器
             Map<String, Long[]> ipMap = (Map<String, Long[]>) context.getAttribute("ipMap");
-            // 判断存储器中是否存在当前IP，如果没有则为初次访问，初始化该ip
-            // 如果存在当前ip，则验证当前ip的访问次数
-            // 如果大于限制阀值，判断达到阀值的时间，如果不大于[用户访问最小安全时间]则视为恶意访问，跳转到异常页面
+
 
             if (ipMap.containsKey(ip)) {
                 Long[] ipInfo = ipMap.get(ip);

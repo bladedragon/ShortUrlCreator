@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    url:
+    driver-class-name: com.mysql.jdbc.Driver
+    username:
+    password:
+    show-sql: true
+  redis:
+    host: localhost
+    port: 6379
+    database: 13
+    timeout: 500ms
+
+    jedis:
+      pool:
+        max-wait: 10000ms
+        max-idle: 8
+        min-idle: 2
+        max-active: 8
+
+
+
+mybatis:
+  type-aliases-package: team.redrock.ShortUrl.entitiy
+
+thymeleaf:
+  prefix: classpath:/static/
+  suffix: .html
+  cache: false
+  encoding: UTF-8
+  resources:
+    static-locations: ["/templates/","/resources/","/static/"]
+server:
+  port: 8081
+
+logging:
+  path: E:\IDEA projects\Prj\ShortUrl\log
+  level:
+    team:
+      redrock:
+        thirdclasswork:
+          mapper: debug

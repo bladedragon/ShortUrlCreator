@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+ <link rel="stylesheet" href="css/style.css">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script src="js/utility.js"></script>
+    <script src="js/clipboard.js"></script>
+</head>
+<body>
+
+<div class="y" id = "no">
+                <span>
+                    <a class="btn btn-lg  " href="index.html" >登录</a>
+                </span>
+    <sapn class="btn btn-lg" style="color:#8c8d8d">|</sapn>
+    <span>
+                    <a class="btn btn-lg   " href="register.html">注册</a>
+                </span>
+</div>
+<div class="y" id="ed">
+                <span >
+                    <a class="welcome btn btn-lg   " href="#" id="wel" >welcome!</a>
+                </span>
+    <sapn class="btn btn-lg   " style="color:#8c8d8d">|</sapn>
+    <span>
+                    <a class="btn btn-lg  " href="index.html" onclick="logoff()">退出</a>
+                </span>
+</div>
+
+<script type="application/javascript">
+console.log(cookie);
+    var usersession = getCookie("user");
+    var cookie = JSON.parse(usersession);
+
+    console.log(cookie);
+    var btn1=document.getElementById('ed');
+    var box1=document.getElementById('no');
+    function btn(){
+        if(cookie == undefined) {
+            btn1.style.display = "none";
+            var date = new Date();
+            date.setTime(date.getTime()+86400000);         //设置过期时间为1天后
+            setCookie("chance",5,date);
+            console.log("5:45:"+cookie);
+            console.log("5:45:"+getCookie("chance"));
+        }
+        else {
+            box1.style.display = "none";
+            var wel = document.getElementById("wel");
+            wel.innerText = "welcome!  " + cookie.username;
+        }
+    }
+    btn();
+    </script>
+
+
+        <div class="container">
+            <div class="col-md-4 location">
+                <div class="form-signin text-center">
+                    <h2 class="form-signin-heading">ZShort短网址生成</h2>
+
+
+                    <p class="result" > <h4 id="result" style="color: red ;visibility:hidden "></h4></p>
+               <form id="fcopy" >
+                    <textarea id="tcopy" cols="60" rows="2" style="margin: 0px; width: 350px; height: 40px;visibility: hidden"></textarea>
+                </form>
+                    <p></p>
+
+
+                    <script language="JavaScript">
+
+                    function setTxt() {
+                        var t=document.getElementById("tcopy");
+                        t.select();
+                        alert("该浏览器暂不支持自动复制，请手动复制！");
+                        window.clipboardData.setData('text',t.createTextRange().text);
+                    }
+
+               </script>
+                    <button id="ccopy" ata-clipboard-text="#longurl"type="image" src="" style="display: none;" onclick="setTxt()">复制</button>
+
+                    <p><input   id="longurl" class="form-control s-margin-2" type="text" name="url" placeholder="请输入您要简化的网址:(用http://开头)"></p>
+                    <p><label for=>自定义（可选）</label>http://ZS/<input id="shorturl" maxlength="40" type="text" name="alias" value="">
+                        <br><span>可输入字母、数字、破折号。</span></p>
+                    <script type="text/javascript" src="http://www.jq22.com/demo/copy20161120/dist/clipboard.min.js"></script>
+                    <script>
+                        //复制到剪贴板
+                        $(document).ready(function(){
+                            var clipboard = new Clipboard('.ccopy');
+                            clipboard.on('success', function(e) {
+                                console.log(e);
+                                alert("复制成功！")
+                            });
+                            clipboard.on('error', function(e) {
+                                console.log(e);
+                                alert("复制失败！请手动复制")
+                            });
+                        })
+                    </script>
+                    <p><label for=>过期时间（小时）</label><input id="expire" maxlength="40" type="text" name="alias" value="">
+
+                    <p><label for=>验证码（必填）</label>
+                        <input type="text" id="verify_input"  placeholder="验证码" value="" >
+                    </p>
+
+                    <p><span  class="wp" style="width:120px; height:20px;"></span>
+                        <a href="javascript:void(0);" title="点击更换验证码">
+                        <img id="img" src="" onclick="getVerify(this)" width="100" height="40" alt="获取验证码">
+                        </a></p>
+
+                <button class="btn btn-lg  btn-block s-margin-2" onclick="create()">生成</button>
+
+                </div>
+            </div>
+        </div>
+        <script src="js/utility.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script type="application/javascript">
+
+function create() {
+    var img = document.getElementById("img");
+    getVerify(img);
+    createurl();
+}
+
+            function logoff() {
+                var file ;
+                var files = new Array(file);
+                var response;
+                $.ajax({
+                    async: false,
+                    type: 'GET',
+                    url: address + "exit",
+                    data: String,
+                    dataType: 'json',
+                    success: function (result) {
+                        response = result;
+                        console.log("1111");
+
+                    },
+                    error: function (result) {
+                        alert('服务器异常');
+                    }
+                });
+
+                console.log(response.content);
+                if (response.status == "0") {
+                    alert(response.content);
+                }
+            }
+
+
+            function getVerify(obj) {
+
+                obj.src = address + "/getVerify?"+Math.random();
+            }
+            
+            function createurl() {
+
+
+
+                var currcookie = getCookie("chance");
+                var chance = parseInt(currcookie);
+                console.log("currentcookie:"+currcookie);
+                chance = chance-1;
+                setCookie("chance",chance);
+                console.log("setcookie"+getCookie("chance"));
+                if(chance<0){
+                    alert("今日转化次数已用完，继续转化请登录");
+                    return ;
+                }
+                var res;
+                var vertext = $('#verify_input').val();
+    // console.log(vertext);
+                $.ajax({
+                    async: false,
+                    type: 'POST',
+                    url: address + "checkVerify",
+                    data: {inputStr:vertext},
+                    dataType: 'json',
+                    success: function (result) {
+                        res = result;
+                    },
+                    error: function (result) {
+                        alert('服务器异常');
+                    }
+                });
+                if (res.status != "0") {
+                    alert(res.content);
+                } else {
+                    console.log(res.content);
+
+
+                    var url = {};
+                    url.longurl = document.getElementById("longurl").value;
+                    url.shorturl = document.getElementById("shorturl").value;
+                    url.expire = parseInt(document.getElementById("expire").value);
+                    console.log(url);
+                    var response;
+                    var result = document.getElementById("result");
+                    if (url.longurl == "") {
+
+                        result.style.visibility = "visible";
+                        result.innerText = "网址不能为空";
+                        return;
+                    }
+
+
+                    if (url.expire == ""||isNaN(url.expire)) {
+                        url.expire = 0;
+                    }
+                    if (url.longurl.indexOf("http://") == 0 || url.longurl.indexOf("https://")== 0) {
+                        $.ajax({
+                            async: false,
+                            type: 'POST',
+                            url: address + "save",
+                            data: url,
+                            dataType: 'json',
+                            success: function (result) {
+                                response = result;
+                            },
+                            error: function (result) {
+                                alert('服务器异常');
+                            }
+                        });
+
+                        if (response.status == "0") {
+                            alert("生成成功");
+                            var result = document.getElementById("result");
+                            result.style.visibility = "hidden";
+                            var tcopy = document.getElementById("tcopy");
+                            tcopy.style.visibility = "visible";
+                            var ccopy = document.getElementById("ccopy");
+                            ccopy.style.display = "";
+                            var urlstr = response.content.replace("\"", "").replace("\"", "");
+                            tcopy.innerText = urlstr;
+                        } else {
+                            alert("生成失败");
+                            var result = document.getElementById("result");
+                            result.style.visibility = "visible";
+                            result.innerText = response.content;
+                        }
+                    } else {
+                        result.style.visibility = "visible";
+                        result.innerText = "网址请包含http协议";
+                        return;
+                    }
+                }
+            }
+        </script>
+
+</body>
+</html>

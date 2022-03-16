@@ -12,9 +12,6 @@
 
 ####  存储URL信息
 
-URL
-
-> http://120.77.150.210:8081/save
 
 支持格式
 
@@ -41,13 +38,13 @@ HTTP请求方式
 
 接口示例
 
-> 地址:http://120.77.150.210:8081/save?longurl=www.baidu.com&expire=1&shorturl=baidu
+> 地址:http://xxxx:8081/save?longurl=www.baidu.com&expire=1&shorturl=baidu
 
 > 结果：
 >
 > {
 > "status": "0",
-> "content": "\"http://120.77.150.210:8081/ZS/baidu\""
+> "content": "\"http://xxxx:8081/ZS/baidu\""
 > }
 
 
@@ -56,7 +53,7 @@ HTTP请求方式
 
 URL
 
-> http://120.77.150.210:8081/ZS/
+> http:/xxxx:8081/ZS/
 
 支持格式
 
@@ -80,7 +77,7 @@ HTTP请求方式
 
 接口示例
 
-> 地址：http://120.77.150.210:8081/ZS/baidu
+> 地址：http://xxxx:8081/ZS/baidu
 
 > 结果: 获取映射百度页面
 
@@ -90,7 +87,7 @@ HTTP请求方式
 
 URL
 
-> http://120.77.150.210:8081/login
+> http://xxxx:8081/login
 
 支持格式
 
@@ -116,11 +113,11 @@ HTTP请求方式
 
 接口示例
 
-> 地址：http://120.77.150.210:8081/login?username=z&password=z
+> 地址：http://xxxx:8081/login?username=z&password=z
 
 > 结果: {"status":"0","content":"{\"isPrime\":0,\"password\":\"z\",\"userId\":1,\"username\":\"z\"}"} 
 
-> 地址：http://120.77.150.210:8081/login?username=z&password=zzz
+> 地址：http://xxxx:8081/login?username=z&password=zzz
 
 >结果：{"status":"-1","content":"密码错误"} 
 
@@ -130,7 +127,7 @@ HTTP请求方式
 
 URL
 
->http://120.77.150.210:8081/register
+>http://xxxx:8081/register
 
 支持格式
 
@@ -156,11 +153,10 @@ HTTP请求方式
 
 接口示例
 
-> 地址：http://120.77.150.210:8081/register?username=zzz&password=zzz
 
 > 结果:{"status":"0","content":"{\"isPrime\":0,\"password\":\"zzz\",\"username\":\"zzz\"}"} 
 
-> 地址：http://120.77.150.210:8081/register?username=z&password=zzz
+> 地址：http://xxxx:8081/register?username=z&password=zzz
 
 > 结果：{"status":"-1","content":"用户名已存在！"} 
 
